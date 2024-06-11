@@ -5,6 +5,38 @@ date: "`r Sys.Date()`"
 output: html_document
 ---
 
+```{r}
+# Start using git in Rstudio
+
+#1. Create a new project
+usethis::use_git()
+
+#2. Connect to Github
+usethis::use_github()
+
+#3. create an R script in the created project
+
+#4. use Rstudio to commit/push the changes
+
+#5. To transfer the changes in the GitHub repository to your local repository, go back to RStudio and use the blue arrow in the git pane to pull the changes.
+
+#6. use diff button to check the changes (added&deleted)
+
+#7. To revert to the last commit state you can use the Revert.. button in RStudios git pane, it is in a dropdown from the cogwheel.
+
+#8. If you want to go further back to an older commit you will have to use the terminal pane in RStudio. In essence, you are using git from the terminal in your local repository. Here are the commands:
+# git reset HEAD~1 
+# git restore <our R script>
+#you can git restore your R script file to take it back to the way it was at the start of current commit
+
+#9. 
+
+
+
+
+```
+
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
