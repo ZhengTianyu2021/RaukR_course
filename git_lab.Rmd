@@ -29,8 +29,13 @@ usethis::use_github()
 # git restore <our R script>
 #you can git restore your R script file to take it back to the way it was at the start of current commit
 
-#9. 
+#9. Branches: 
+#Useful commands for branches from terminal:
 
+#git branch <name of branch> : Create a new branch.
+#git branch : See list of branches. Current branch marked with *.
+#git checkout <name of branch> : Move to branch.
+#git merge <name of branch> : Merge the branch you are currently on with the branch named in command.
 
 
 
