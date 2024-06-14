@@ -1,0 +1,42 @@
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+# mypackage
+
+<!-- badges: start -->
+
+[![R-CMD-check](https://github.com/ZhengTianyu2021/RaukR_course/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ZhengTianyu2021/RaukR_course/actions/workflows/R-CMD-check.yaml)
+<!-- badges: end -->
+
+The goal of my package is to summarize package installment in my R lib
+
+## Installation
+
+You can install the development version of mypackage from
+[GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("ZhengTianyu2021/RaukR_course")
+```
+
+## Example
+
+This is a basic example which shows you how to solve a common problem:
+
+``` r
+library(mypackage)
+## basic example code
+```
+
+What is special about using `README.Rmd` instead of just `README.md`?
+You can include R chunks like so:
+
+\##example Run once • create_package() • use_git() • use_github() •
+use_mit_license() • use_testthat() • use_readme_rmd() •
+use_pkgdown_github_pages()
+
+• use_r() • use_test() • use_package() • rename_files() •
+use_github_action() • use_vignette()
+
+• load_all() • document() • test() • check()
