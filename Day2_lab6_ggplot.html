@@ -1,0 +1,1889 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.43">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Lab6_ggplot</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="Day2_lab6_ggplot_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Day2_lab6_ggplot_files/libs/quarto-html/quarto.js"></script>
+<script src="Day2_lab6_ggplot_files/libs/quarto-html/popper.min.js"></script>
+<script src="Day2_lab6_ggplot_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Day2_lab6_ggplot_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Day2_lab6_ggplot_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Day2_lab6_ggplot_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Day2_lab6_ggplot_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Day2_lab6_ggplot_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Day2_lab6_ggplot_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lab6_ggplot</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="basics" class="level2">
+<h2 class="anchored" data-anchor-id="basics">1. Basics</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="building-a-plot" class="level3">
+<h3 class="anchored" data-anchor-id="building-a-plot">1.1 Building a plot</h3>
+<p>We use the <code>iris</code> data to get started. This dataset has four continuous variables and one categorical variable. It is important to remember about the data type when plotting graphs</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris)<span class="sc">+</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Petal.Length,<span class="at">y=</span>Petal.Width))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="multiple-geoms" class="level3">
+<h3 class="anchored" data-anchor-id="multiple-geoms">1.3 Multiple geoms</h3>
+<p>Further geoms can be added. eg.: add a regression line (this is added after points)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris,<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Petal.Length,<span class="at">y=</span>Petal.Width))<span class="sc">+</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="using-colors" class="level3">
+<h3 class="anchored" data-anchor-id="using-colors">1.3 Using colors</h3>
+<p>We can use the categorical column <code>Species</code> to color the points. The color aesthetic is used by <code>geom_point</code> and <code>geom_smooth</code>.</p>
+<p>If we wanted to keep a common regression line while keeping the colors for the points, we could specify color aesthetic only for <code>geom_point</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris,<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Petal.Length,<span class="at">y=</span>Petal.Width,<span class="at">color=</span>Species))<span class="sc">+</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris,<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Petal.Length,<span class="at">y=</span>Petal.Width))<span class="sc">+</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>Species))<span class="sc">+</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="aesthetic-parameter" class="level3">
+<h3 class="anchored" data-anchor-id="aesthetic-parameter">1.4 Aesthetic parameter</h3>
+<p>change the size of the points</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris,<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Petal.Length,<span class="at">y=</span>Petal.Width))<span class="sc">+</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>Species),<span class="at">size=</span><span class="dv">3</span>)<span class="sc">+</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="aesthetic-mapping" class="level3">
+<h3 class="anchored" data-anchor-id="aesthetic-mapping">1.5 Aesthetic mapping</h3>
+<p>change the size of points based on another vector, Sepal.Width</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris,<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Petal.Length,<span class="at">y=</span>Petal.Width))<span class="sc">+</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>Species,<span class="at">size=</span>Sepal.Width))<span class="sc">+</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="discrete-colors" class="level3">
+<h3 class="anchored" data-anchor-id="discrete-colors">1.6 Discrete colors</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris,<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Petal.Length,<span class="at">y=</span>Petal.Width))<span class="sc">+</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>Species,<span class="at">size=</span>Sepal.Width))<span class="sc">+</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>)<span class="sc">+</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"orange"</span>,<span class="st">"darkgreen"</span>,<span class="st">"purple"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="continuous-colors" class="level3">
+<h3 class="anchored" data-anchor-id="continuous-colors">1.7 Continuous colors</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris,<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Petal.Length,<span class="at">y=</span>Petal.Width))<span class="sc">+</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>Sepal.Width))<span class="sc">+</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="titles" class="level3">
+<h3 class="anchored" data-anchor-id="titles">1.8 Titles</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris,<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Petal.Length,<span class="at">y=</span>Petal.Width))<span class="sc">+</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>Sepal.Width))<span class="sc">+</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>)<span class="sc">+</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_continuous</span>(<span class="at">name=</span><span class="st">"New Legend Title"</span>)<span class="sc">+</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"This Is A Title"</span>,<span class="at">subtitle=</span><span class="st">"This is a subtitle"</span>,<span class="at">x=</span><span class="st">" Petal Length"</span>, </span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Petal Width"</span>, <span class="at">caption=</span><span class="st">"This is a little caption."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="axes-modification" class="level3">
+<h3 class="anchored" data-anchor-id="axes-modification">1.9 Axes modification</h3>
+<p>we are not happy with the x-axis breaks 2,4,6 etc. We would like to have 1,2,3… We change this using <code>scale_x_continuous()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris,<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Petal.Length,<span class="at">y=</span>Petal.Width))<span class="sc">+</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>Sepal.Width))<span class="sc">+</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>)<span class="sc">+</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_continuous</span>(<span class="at">name=</span><span class="st">"New Legend Title"</span>)<span class="sc">+</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>)<span class="sc">+</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"This Is A Title"</span>,<span class="at">subtitle=</span><span class="st">"This is a subtitle"</span>,<span class="at">x=</span><span class="st">" Petal Length"</span>, </span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Petal Width"</span>, <span class="at">caption=</span><span class="st">"This is a little caption."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="faceting" class="level3">
+<h3 class="anchored" data-anchor-id="faceting">1.10 Faceting</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris,<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Petal.Length,<span class="at">y=</span>Petal.Width))<span class="sc">+</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>Sepal.Width))<span class="sc">+</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>)<span class="sc">+</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_continuous</span>(<span class="at">name=</span><span class="st">"New Legend Title"</span>)<span class="sc">+</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>)<span class="sc">+</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"This Is A Title"</span>,<span class="at">subtitle=</span><span class="st">"This is a subtitle"</span>,<span class="at">x=</span><span class="st">" Petal Length"</span>, </span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Petal Width"</span>, <span class="at">caption=</span><span class="st">"This is a little caption."</span>)<span class="sc">+</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="themes" class="level3">
+<h3 class="anchored" data-anchor-id="themes">1.11 Themes</h3>
+<p>change the default <code>theme_grey()</code> to <code>theme_bw()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris,<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Petal.Length,<span class="at">y=</span>Petal.Width))<span class="sc">+</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>Sepal.Width))<span class="sc">+</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>)<span class="sc">+</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_continuous</span>(<span class="at">name=</span><span class="st">"New Legend Title"</span>)<span class="sc">+</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>)<span class="sc">+</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"This Is A Title"</span>,<span class="at">subtitle=</span><span class="st">"This is a subtitle"</span>,<span class="at">x=</span><span class="st">" Petal Length"</span>, </span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Petal Width"</span>, <span class="at">caption=</span><span class="st">"This is a little caption."</span>)<span class="sc">+</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Species)<span class="sc">+</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>All non-data related aspects of the plot can be modified through themes. Let’s modify the colors of the title labels and turn off the gridlines. The various parameters for theme can be found using <code>?theme</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris,<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Petal.Length,<span class="at">y=</span>Petal.Width))<span class="sc">+</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>Sepal.Width))<span class="sc">+</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>)<span class="sc">+</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_continuous</span>(<span class="at">name=</span><span class="st">"New Legend Title"</span>)<span class="sc">+</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>)<span class="sc">+</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"This Is A Title"</span>,<span class="at">subtitle=</span><span class="st">"This is a subtitle"</span>,<span class="at">x=</span><span class="st">" Petal Length"</span>, </span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Petal Width"</span>, <span class="at">caption=</span><span class="st">"This is a little caption."</span>)<span class="sc">+</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Species)<span class="sc">+</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title=</span><span class="fu">element_text</span>(<span class="at">color=</span><span class="st">"Blue"</span>,<span class="at">face=</span><span class="st">"bold"</span>),</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title=</span><span class="fu">element_text</span>(<span class="at">color=</span><span class="st">"Green"</span>,<span class="at">face=</span><span class="st">"bold"</span>),</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle=</span><span class="fu">element_text</span>(<span class="at">color=</span><span class="st">"Pink"</span>),</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid=</span><span class="fu">element_blank</span>()</span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Themes can be saved and reused:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>newtheme <span class="ot">&lt;-</span> <span class="fu">theme</span>(</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title=</span><span class="fu">element_text</span>(<span class="at">color=</span><span class="st">"Blue"</span>,<span class="at">face=</span><span class="st">"bold"</span>),</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title=</span><span class="fu">element_text</span>(<span class="at">color=</span><span class="st">"Green"</span>,<span class="at">face=</span><span class="st">"bold"</span>),</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle=</span><span class="fu">element_text</span>(<span class="at">color=</span><span class="st">"Pink"</span>),</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid=</span><span class="fu">element_blank</span>())</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris,<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Petal.Length,<span class="at">y=</span>Petal.Width))<span class="sc">+</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>Sepal.Width))<span class="sc">+</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>)<span class="sc">+</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_continuous</span>(<span class="at">name=</span><span class="st">"New Legend Title"</span>)<span class="sc">+</span></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>)<span class="sc">+</span></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"This Is A Title"</span>,<span class="at">subtitle=</span><span class="st">"This is a subtitle"</span>,<span class="at">x=</span><span class="st">" Petal Length"</span>, </span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Petal Width"</span>, <span class="at">caption=</span><span class="st">"This is a little caption."</span>)<span class="sc">+</span></span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Species)<span class="sc">+</span></span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>  newtheme</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="controlling-legends" class="level3">
+<h3 class="anchored" data-anchor-id="controlling-legends">1.12 Controlling legends</h3>
+<p>If we don’t want to have the extra legend, we can turn off legends individually by aesthetic: guides(size=“none”).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris,<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Petal.Length,<span class="at">y=</span>Petal.Width))<span class="sc">+</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>Species,<span class="at">size=</span>Sepal.Width))<span class="sc">+</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">size=</span><span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We can also turn off legends by geom.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris,<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Petal.Length,<span class="at">y=</span>Petal.Width))<span class="sc">+</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>Species,<span class="at">size=</span>Sepal.Width),<span class="at">show.legend=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Legends can be moved around using theme.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris,<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Petal.Length,<span class="at">y=</span>Petal.Width))<span class="sc">+</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>Species,<span class="at">size=</span>Sepal.Width))<span class="sc">+</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"top"</span>,</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.justification=</span><span class="st">"right"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Legend rows can be controlled in a finer manner.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris,<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Petal.Length,<span class="at">y=</span>Petal.Width))<span class="sc">+</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>Species,<span class="at">size=</span>Sepal.Width))<span class="sc">+</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">size=</span><span class="fu">guide_legend</span>(<span class="at">nrow=</span><span class="dv">2</span>,<span class="at">byrow=</span><span class="cn">TRUE</span>),</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">color=</span><span class="fu">guide_legend</span>(<span class="at">nrow=</span><span class="dv">3</span>,<span class="at">byrow=</span>T))<span class="sc">+</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"top"</span>,</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.justification=</span><span class="st">"right"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="labelling" class="level3">
+<h3 class="anchored" data-anchor-id="labelling">1.13 Labelling</h3>
+<p>Items on the plot can be labelled using the <code>geom_text</code> or <code>geom_label</code> geoms.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris,<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Petal.Length,<span class="at">y=</span>Petal.Width))<span class="sc">+</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>Species))<span class="sc">+</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label=</span>Species,<span class="at">hjust=</span><span class="dv">0</span>),<span class="at">nudge_x=</span><span class="fl">0.5</span>,<span class="at">size=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris,<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Petal.Length,<span class="at">y=</span>Petal.Width))<span class="sc">+</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>Species))<span class="sc">+</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label</span>(<span class="fu">aes</span>(<span class="at">label=</span>Species,<span class="at">hjust=</span><span class="dv">0</span>),<span class="at">nudge_x=</span><span class="fl">0.5</span>,<span class="at">size=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris,<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Petal.Length,<span class="at">y=</span>Petal.Width))<span class="sc">+</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>Species))<span class="sc">+</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_repel</span>(<span class="fu">aes</span>(<span class="at">label=</span>Species),<span class="at">size=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ggrepel: 130 unlabeled data points (too many overlaps). Consider
+increasing max.overlaps</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="annotations" class="level3">
+<h3 class="anchored" data-anchor-id="annotations">1.14 Annotations</h3>
+<p>Custom annotations of any geom can be added arbitrarily anywhere on the plot.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris,<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Petal.Length,<span class="at">y=</span>Petal.Width))<span class="sc">+</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>Species))<span class="sc">+</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>,<span class="at">x=</span><span class="fl">2.5</span>,<span class="at">y=</span><span class="fl">2.1</span>,<span class="at">label=</span><span class="st">"There is a random line here"</span>)<span class="sc">+</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"segment"</span>,<span class="at">x=</span><span class="dv">2</span>,<span class="at">xend=</span><span class="dv">4</span>,<span class="at">y=</span><span class="fl">1.5</span>,<span class="at">yend=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="barplots" class="level3">
+<h3 class="anchored" data-anchor-id="barplots">1.15 Barplots</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris,<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Species,<span class="at">y=</span>Petal.Width))<span class="sc">+</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">"identity"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="flip-axes" class="level3">
+<h3 class="anchored" data-anchor-id="flip-axes"><strong>1.16 Flip axes</strong></h3>
+<p>x and y axes can be flipped using <code>coord_flip</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris,<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Species,<span class="at">y=</span>Petal.Width))<span class="sc">+</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">"identity"</span>)<span class="sc">+</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="error-bars" class="level3">
+<h3 class="anchored" data-anchor-id="error-bars">1.17 Error bars</h3>
+<p>An example of using error bars with points. The mean and standard deviation is computed. This is used to create upper and lower bounds for the error bars.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>dfr <span class="ot">&lt;-</span> iris <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(Species) <span class="sc">%&gt;%</span> </span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean=</span><span class="fu">mean</span>(Sepal.Length),<span class="at">sd=</span><span class="fu">sd</span>(Sepal.Length)) <span class="sc">%&gt;%</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">high=</span>mean<span class="sc">+</span>sd,<span class="at">low=</span>mean<span class="sc">-</span>sd)</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>dfr,<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Species,<span class="at">y=</span>mean,<span class="at">color=</span>Species))<span class="sc">+</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">4</span>)<span class="sc">+</span></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymax=</span>high,<span class="at">ymin=</span>low),<span class="at">width=</span><span class="fl">0.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="economist-scatterplot" class="level2">
+<h2 class="anchored" data-anchor-id="economist-scatterplot"><strong>2 Economist Scatterplot</strong></h2>
+<p>The aim of this challenge is to recreate the plot below originally published in <a href="https://www.economist.com/blogs/dailychart/2011/12/corruption-and-development">The Economist</a>. The graph is a scatterplot showing the relationship between <em>Corruption Index</em> and <em>Human Development Index</em> for various countries.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"/Users/tianyuzheng/Library/CloudStorage/OneDrive-KarolinskaInstitutet/Project-Tianyu/phD_Course/RaukR_2024/Material/economist_scatterplot.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="../../Library/CloudStorage/OneDrive-KarolinskaInstitutet/Project-Tianyu/phD_Course/RaukR_2024/Material/economist_scatterplot.png" class="img-fluid figure-img" width="298"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="data" class="level3">
+<h3 class="anchored" data-anchor-id="data">2.1 Data</h3>
+<p>Make sure that the fields are of the correct type. The x-axis field ‘CPI’ and the y-axis field ‘HDI’ must be of numeric type. The categorical field ‘Region’ must be of Factor type.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>ec <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"/Users/tianyuzheng/Library/CloudStorage/OneDrive-KarolinskaInstitutet/Project-Tianyu/phD_Course/RaukR_2024/Material/data_economist.csv"</span>,<span class="at">header=</span>T)</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  X     Country HDI.Rank   HDI CPI            Region
+1 1 Afghanistan      172 0.398 1.5      Asia Pacific
+2 2     Albania       70 0.739 3.1 East EU Cemt Asia
+3 3     Algeria       96 0.698 2.9              MENA
+4 4      Angola      148 0.486 2.0               SSA
+5 5   Argentina       45 0.797 3.0          Americas
+6 6     Armenia       86 0.716 2.6 East EU Cemt Asia</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(ec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   173 obs. of  6 variables:
+ $ X       : int  1 2 3 4 5 6 7 8 9 10 ...
+ $ Country : chr  "Afghanistan" "Albania" "Algeria" "Angola" ...
+ $ HDI.Rank: int  172 70 96 148 45 86 2 19 91 53 ...
+ $ HDI     : num  0.398 0.739 0.698 0.486 0.797 0.716 0.929 0.885 0.7 0.771 ...
+ $ CPI     : num  1.5 3.1 2.9 2 3 2.6 8.8 7.8 2.4 7.3 ...
+ $ Region  : chr  "Asia Pacific" "East EU Cemt Asia" "MENA" "SSA" ...</code></pre>
+</div>
+</div>
+<p>But, the categories on the plot are different and need to be changed as follows:</p>
+<pre><code>From                  To
+EU W. Europe          OECD
+Americas              Americas
+Asia Pacific          Asia &amp; Oceania
+East EU Cemt Asia     Central &amp; Eastern Europe
+MENA                  Middle East &amp; North Africa
+SSA                   Sub-Saharan Africa</code></pre>
+<p>Since the ‘To’ strings are a bit too long to be in one line on the legend, use <code>\n</code> to break a line into two lines. (Tip: <code>\n</code> is the newline character in R.)</p>
+<pre><code>From                  To
+EU W. Europe          OECD
+Americas              Americas
+Asia Pacific          Asia &amp;\nOceania
+East EU Cemt Asia     Central &amp;\nEastern Europe
+MENA                  Middle East &amp;\nNorth Africa
+SSA                   Sub-Saharan\nAfrica</code></pre>
+<p>The strings can be renamed using string replacement or substitution. But a easier way to do it is to use <code>factor()</code>. The arguments <code>levels</code> and <code>labels</code> in function <code>factor()</code> can be used to rename factors.</p>
+<p>`It’s important to use levels function to give orders of the regions.`</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>ec<span class="sc">$</span>Region <span class="ot">&lt;-</span> <span class="fu">factor</span>(ec<span class="sc">$</span>Region,<span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"EU W. Europe"</span>,</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Americas"</span>,</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Asia Pacific"</span>,</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"East EU Cemt Asia"</span>,</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"MENA"</span>,</span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"SSA"</span>),</span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"OECD"</span>,</span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Americas"</span>,</span>
+<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Asia &amp;</span><span class="sc">\n</span><span class="st">Oceania"</span>,</span>
+<span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Central &amp;</span><span class="sc">\n</span><span class="st">Eastern Europe"</span>,</span>
+<span id="cb52-11"><a href="#cb52-11" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Middle East &amp;</span><span class="sc">\n</span><span class="st">North Africa"</span>,</span>
+<span id="cb52-12"><a href="#cb52-12" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Sub-Saharan</span><span class="sc">\n</span><span class="st">Africa"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>New regions:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(ec<span class="sc">$</span>Region)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "OECD"                        "Americas"                   
+[3] "Asia &amp;\nOceania"             "Central &amp;\nEastern Europe"  
+[5] "Middle East &amp;\nNorth Africa" "Sub-Saharan\nAfrica"        </code></pre>
+</div>
+</div>
+</section>
+<section id="points" class="level3">
+<h3 class="anchored" data-anchor-id="points">2.2 Points</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ec,<span class="fu">aes</span>(<span class="at">x=</span>CPI,<span class="at">y=</span>HDI,<span class="at">color=</span>Region))<span class="sc">+</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">shape=</span><span class="dv">21</span>,<span class="at">size=</span><span class="dv">3</span>,<span class="at">stroke=</span><span class="fl">0.8</span>,<span class="at">fill=</span><span class="st">"white"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="trendline" class="level3">
+<h3 class="anchored" data-anchor-id="trendline"><strong>2.3 Trendline</strong></h3>
+<p>Now, we add the trend line using <code>geom_smooth</code>. Check out <code>?geom_smooth</code> and look under ‘Arguments’ for argument options and ‘Aesthetics’ for the aesthetic options.</p>
+<ul>
+<li>Use method ‘lm’ and use a custom formula of <code>y~poly(x,2)</code> to approximate the curve seen on the plot. Turn off confidence interval shading. Set line thickness to 0.6 and line color to red.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ec,<span class="fu">aes</span>(<span class="at">x=</span>CPI,<span class="at">y=</span>HDI,<span class="at">color=</span>Region))<span class="sc">+</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape=</span><span class="dv">21</span>,<span class="at">size=</span><span class="dv">3</span>,<span class="at">stroke=</span><span class="fl">0.8</span>,<span class="at">fill=</span><span class="st">"white"</span>)<span class="sc">+</span></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>,<span class="at">formula=</span>y<span class="sc">~</span><span class="fu">poly</span>(x,<span class="dv">2</span>),<span class="at">se=</span>F,<span class="at">size=</span><span class="fl">0.6</span>,<span class="at">color=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>put the line behind the points:</p>
+<p>Since we provided no aesthetic mappings to <code>geom_smooth</code>, there is no legend entry for the trendline. We can fake a legend entry by providing an aesthetic, for example; <code>aes(fill="red")</code>. We do not use the color aesthetic because it is already in use and would give us reduced control later on to modify this legend entry.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(ec,<span class="fu">aes</span>(<span class="at">x=</span>CPI,<span class="at">y=</span>HDI,<span class="at">color=</span>Region))<span class="sc">+</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">fill=</span><span class="st">"red"</span>),<span class="at">method=</span><span class="st">"lm"</span>,<span class="at">formula=</span>y<span class="sc">~</span><span class="fu">poly</span>(x,<span class="dv">2</span>),<span class="at">se=</span>F,<span class="at">color=</span><span class="st">"red"</span>,<span class="at">size=</span><span class="fl">0.6</span>)<span class="sc">+</span></span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_point</span>(<span class="at">shape=</span><span class="dv">21</span>,<span class="at">size=</span><span class="dv">3</span>,<span class="at">stroke=</span><span class="fl">0.8</span>,<span class="at">fill=</span><span class="st">"white"</span>)</span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>p</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="text-labels" class="level3">
+<h3 class="anchored" data-anchor-id="text-labels"><strong>2.4 Text Labels</strong></h3>
+<p>Now we add the text labels. Only a subset of countries are plotted.</p>
+<ul>
+<li>Use <code>geom_text</code> to subset the original data.frame to the reduced set above and plot the labels as text. See <code>?geom_text</code>.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>labels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Congo"</span>,<span class="st">"Afghanistan"</span>,<span class="st">"Sudan"</span>,<span class="st">"Myanmar"</span>,<span class="st">"Iraq"</span>,<span class="st">"Venezuela"</span>,<span class="st">"Russia"</span>,<span class="st">"Argentina"</span>,<span class="st">"Brazil"</span>,<span class="st">"Italy"</span>,<span class="st">"South Africa"</span>,<span class="st">"Cape Verde"</span>,<span class="st">"Bhutan"</span>,<span class="st">"Botswana"</span>,<span class="st">"Britian"</span>,<span class="st">"New Zealand"</span>,<span class="st">"Greece"</span>,<span class="st">"China"</span>,<span class="st">"India"</span>,<span class="st">"Rwanda"</span>,<span class="st">"Spain"</span>,<span class="st">"France"</span>,<span class="st">"United States"</span>,<span class="st">"Japan"</span>,<span class="st">"Norway"</span>,<span class="st">"Singapore"</span>,<span class="st">"Barbados"</span>,<span class="st">"Germany"</span>)</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>p<span class="sc">+</span><span class="fu">geom_text</span>(<span class="at">data=</span><span class="fu">subset</span>(ec,Country <span class="sc">%in%</span> labels),<span class="fu">aes</span>(<span class="at">label=</span>Country),<span class="at">color=</span><span class="st">"black"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="custom-font" class="level3">
+<h3 class="anchored" data-anchor-id="custom-font"><strong>2.5 Custom Font</strong></h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(showtext)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: sysfonts</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: showtextdb</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">font_add</span>(<span class="st">"Gidole"</span>, <span class="at">regular =</span> <span class="st">"~/Downloads/Gidole-Regular.ttf"</span>)</span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="fu">showtext_auto</span>()</span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>p<span class="sc">+</span><span class="fu">geom_text</span>(<span class="at">data=</span><span class="fu">subset</span>(ec,Country <span class="sc">%in%</span> labels),<span class="fu">aes</span>(<span class="at">label=</span>Country),</span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">color=</span><span class="st">"black"</span>,<span class="at">family=</span><span class="st">"Gidole"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="label-overlap---ggrepel" class="level3">
+<h3 class="anchored" data-anchor-id="label-overlap---ggrepel">2.6 <strong>Label Overlap -</strong> ggrepel</h3>
+<p><code>geom_text_repel()</code> has the same arguments/aesthetics as <code>geom_text</code> and a few more.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> p<span class="sc">+</span><span class="fu">geom_text_repel</span>(<span class="at">data=</span><span class="fu">subset</span>(ec,Country <span class="sc">%in%</span> labels),<span class="fu">aes</span>(<span class="at">label=</span>Country),</span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">color=</span><span class="st">"black"</span>,<span class="at">box.padding=</span><span class="fu">unit</span>(<span class="dv">1</span>,<span class="st">'lines'</span>),<span class="at">segment.size=</span><span class="fl">0.25</span>,</span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">size=</span><span class="dv">3</span>,<span class="at">family=</span><span class="st">"Gidole"</span>)</span>
+<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>p</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-36-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="axes" class="level3">
+<h3 class="anchored" data-anchor-id="axes"><strong>2.7 Axes</strong></h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> p<span class="sc">+</span><span class="fu">scale_x_continuous</span>(<span class="at">name=</span><span class="st">"Corruption Perceptions Index, 2011 (10=least corrupt)"</span>,</span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">breaks=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="at">limits=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">10</span>))<span class="sc">+</span></span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_y_continuous</span>(<span class="at">name=</span><span class="st">"Human Development Index, 2011 (1=best)"</span>,</span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">breaks=</span><span class="fu">seq</span>(<span class="at">from=</span><span class="dv">0</span>,<span class="at">to=</span><span class="dv">1</span>,<span class="at">by=</span><span class="fl">0.1</span>),<span class="at">limits=</span><span class="fu">c</span>(<span class="fl">0.2</span>,<span class="dv">1</span>))</span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a>p</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="scale-colors" class="level3">
+<h3 class="anchored" data-anchor-id="scale-colors"><strong>2.8 Scale Colors</strong></h3>
+<ul>
+<li><p>Use <code>scale_color_manual()</code> to provide custom colors. These are the colors to use for the points: <code>"#23576E","#099FDB","#29B00E", "#208F84","#F55840","#924F3E"</code>.</p></li>
+<li><p>Use <code>scale_fill_manual</code> to change the trendline label since it’s a fill scale. The legend entry for the trendline should read ‘R^2=52%’.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> p<span class="sc">+</span><span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"#23576E"</span>,<span class="st">"#099FDB"</span>,<span class="st">"#29B00E"</span>, <span class="st">"#208F84"</span>,<span class="st">"#F55840"</span>,<span class="st">"#924F3E"</span>))<span class="sc">+</span></span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">scale_fill_manual</span>(<span class="at">name=</span><span class="st">"trend"</span>,<span class="at">values=</span><span class="st">"red"</span>,<span class="at">labels=</span><span class="fu">expression</span>(<span class="fu">paste</span>(R<span class="sc">^</span><span class="dv">2</span>,<span class="st">"=52%"</span>)))</span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>p</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-38-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="title" class="level3">
+<h3 class="anchored" data-anchor-id="title"><strong>2.9 Title</strong></h3>
+<p>Title and caption can be added with <code>labs</code>.</p>
+<ul>
+<li><p>Set the title to ‘Corruption and human development’.</p></li>
+<li><p>Set the caption to ‘Sources: Transparency International; UN Human Development Report’.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> p<span class="sc">+</span><span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Corruption and human development"</span>,</span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">caption=</span><span class="st">"Sources: Transparency International; UN Human Development Report"</span>)</span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>p</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="theme" class="level3">
+<h3 class="anchored" data-anchor-id="theme">2.10 Theme</h3>
+<p>We want to move the legend to the top and as a single row. This can be done using <code>theme()</code> option <code>legend.position</code>. See <code>?theme</code>. <code>guides()</code> is used to set the number of rows to 1. We also set a custom font for all text elements using <code>base_family="Gidole"</code>. This can be skipped if a font change is not required.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> p<span class="sc">+</span><span class="fu">guides</span>(<span class="at">color=</span><span class="fu">guide_legend</span>(<span class="at">nrow=</span><span class="dv">1</span>))<span class="sc">+</span></span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">theme_bw</span>(<span class="at">base_family=</span><span class="st">"Gidole"</span>)<span class="sc">+</span></span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"top"</span>)</span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>p</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-40-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Now we do some careful refining with themes.</p>
+<ul>
+<li><p>Turn off minor gridlines</p></li>
+<li><p>Turn off major gridlines on x-axis</p></li>
+<li><p>Remove the gray background</p></li>
+<li><p>Remove panel border</p></li>
+<li><p>Remove legend titles</p></li>
+<li><p>Make axes titles italic</p></li>
+<li><p>Turn off y-axis ticks</p></li>
+<li><p>Change x-axis ticks to color grey60</p></li>
+<li><p>Make plot title bold</p></li>
+<li><p>Decrease size of caption to size 8</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>p<span class="sc">+</span><span class="fu">theme</span>(<span class="at">panel.grid.minor=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.grid.major.x=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.background=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.border=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">legend.title=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb69-6"><a href="#cb69-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title=</span><span class="fu">element_text</span>(<span class="at">face=</span><span class="st">"italic"</span>),</span>
+<span id="cb69-7"><a href="#cb69-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb69-8"><a href="#cb69-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.ticks.x=</span><span class="fu">element_line</span>(<span class="at">color=</span><span class="st">"grey60"</span>),</span>
+<span id="cb69-9"><a href="#cb69-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">plot.title=</span><span class="fu">element_text</span>(<span class="at">face=</span><span class="st">"bold"</span>),</span>
+<span id="cb69-10"><a href="#cb69-10" aria-hidden="true" tabindex="-1"></a>          <span class="at">plot.caption=</span><span class="fu">element_text</span>(<span class="at">hjust=</span><span class="dv">0</span>,<span class="at">size=</span><span class="dv">8</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-41-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The full script for this challenge is summarized here:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read data</span></span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>ec <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"/Users/tianyuzheng/Library/CloudStorage/OneDrive-KarolinskaInstitutet/Project-Tianyu/phD_Course/RaukR_2024/Material/data_economist.csv"</span>,<span class="at">header=</span>T)</span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a><span class="co"># refactor</span></span>
+<span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a>ec<span class="sc">$</span>Region <span class="ot">&lt;-</span> <span class="fu">factor</span>(ec<span class="sc">$</span>Region,</span>
+<span id="cb70-5"><a href="#cb70-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"EU W. Europe"</span>,<span class="st">"Americas"</span>,<span class="st">"Asia Pacific"</span>,</span>
+<span id="cb70-6"><a href="#cb70-6" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"East EU Cemt Asia"</span>,<span class="st">"MENA"</span>,<span class="st">"SSA"</span>),</span>
+<span id="cb70-7"><a href="#cb70-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"OECD"</span>,<span class="st">"Americas"</span>,<span class="st">"Asia &amp;</span><span class="sc">\n</span><span class="st">Oceania"</span>,</span>
+<span id="cb70-8"><a href="#cb70-8" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Central &amp;</span><span class="sc">\n</span><span class="st">Eastern Europe"</span>,</span>
+<span id="cb70-9"><a href="#cb70-9" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Middle East &amp;</span><span class="sc">\n</span><span class="st">North Africa"</span>,</span>
+<span id="cb70-10"><a href="#cb70-10" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Sub-Saharan</span><span class="sc">\n</span><span class="st">Africa"</span>))</span>
+<span id="cb70-11"><a href="#cb70-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb70-12"><a href="#cb70-12" aria-hidden="true" tabindex="-1"></a><span class="co"># labels</span></span>
+<span id="cb70-13"><a href="#cb70-13" aria-hidden="true" tabindex="-1"></a>labels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Congo"</span>,<span class="st">"Afghanistan"</span>,<span class="st">"Sudan"</span>,<span class="st">"Myanmar"</span>,<span class="st">"Iraq"</span>,<span class="st">"Venezuela"</span>,<span class="st">"Russia"</span>,<span class="st">"Argentina"</span>,<span class="st">"Brazil"</span>,<span class="st">"Italy"</span>,<span class="st">"South Africa"</span>,<span class="st">"Cape Verde"</span>,<span class="st">"Bhutan"</span>,<span class="st">"Botswana"</span>,<span class="st">"Britian"</span>,<span class="st">"New Zealand"</span>,<span class="st">"Greece"</span>,<span class="st">"China"</span>,<span class="st">"India"</span>,<span class="st">"Rwanda"</span>,<span class="st">"Spain"</span>,<span class="st">"France"</span>,<span class="st">"United States"</span>,<span class="st">"Japan"</span>,<span class="st">"Norway"</span>,<span class="st">"Singapore"</span>,<span class="st">"Barbados"</span>,<span class="st">"Germany"</span>)</span>
+<span id="cb70-14"><a href="#cb70-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb70-15"><a href="#cb70-15" aria-hidden="true" tabindex="-1"></a><span class="co"># plotting</span></span>
+<span id="cb70-16"><a href="#cb70-16" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(ec,<span class="fu">aes</span>(<span class="at">x=</span>CPI,<span class="at">y=</span>HDI,<span class="at">color=</span>Region))<span class="sc">+</span></span>
+<span id="cb70-17"><a href="#cb70-17" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">fill=</span><span class="st">"red"</span>),<span class="at">method=</span><span class="st">"lm"</span>,<span class="at">formula=</span>y<span class="sc">~</span><span class="fu">poly</span>(x,<span class="dv">2</span>),<span class="at">se=</span>F,<span class="at">color=</span><span class="st">"red"</span>,<span class="at">size=</span><span class="fl">0.6</span>)<span class="sc">+</span></span>
+<span id="cb70-18"><a href="#cb70-18" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_point</span>(<span class="at">shape=</span><span class="dv">21</span>,<span class="at">size=</span><span class="dv">3</span>,<span class="at">stroke=</span><span class="fl">0.8</span>,<span class="at">fill=</span><span class="st">"white"</span>)<span class="sc">+</span></span>
+<span id="cb70-19"><a href="#cb70-19" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_text_repel</span>(<span class="at">data=</span><span class="fu">subset</span>(ec,Country <span class="sc">%in%</span> labels),<span class="fu">aes</span>(<span class="at">label=</span>Country),</span>
+<span id="cb70-20"><a href="#cb70-20" aria-hidden="true" tabindex="-1"></a>                       <span class="at">color=</span><span class="st">"black"</span>,<span class="at">box.padding=</span><span class="fu">unit</span>(<span class="dv">1</span>,<span class="st">'lines'</span>),<span class="at">segment.size=</span><span class="fl">0.25</span>,</span>
+<span id="cb70-21"><a href="#cb70-21" aria-hidden="true" tabindex="-1"></a>                       <span class="at">size=</span><span class="dv">3</span>,<span class="at">family=</span><span class="st">"Gidole"</span>)<span class="sc">+</span></span>
+<span id="cb70-22"><a href="#cb70-22" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_x_continuous</span>(<span class="at">name=</span><span class="st">"Corruption Perceptions Index, 2011 (10=least corrupt)"</span>,</span>
+<span id="cb70-23"><a href="#cb70-23" aria-hidden="true" tabindex="-1"></a>                          <span class="at">breaks=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="at">limits=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">10</span>))<span class="sc">+</span></span>
+<span id="cb70-24"><a href="#cb70-24" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_y_continuous</span>(<span class="at">name=</span><span class="st">"Human Development Index, 2011 (1=best)"</span>,</span>
+<span id="cb70-25"><a href="#cb70-25" aria-hidden="true" tabindex="-1"></a>                         <span class="at">breaks=</span><span class="fu">seq</span>(<span class="at">from=</span><span class="dv">0</span>,<span class="at">to=</span><span class="dv">1</span>,<span class="at">by=</span><span class="fl">0.1</span>),<span class="at">limits=</span><span class="fu">c</span>(<span class="fl">0.2</span>,<span class="dv">1</span>))<span class="sc">+</span></span>
+<span id="cb70-26"><a href="#cb70-26" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"#23576E"</span>,<span class="st">"#099FDB"</span>,<span class="st">"#29B00E"</span>, <span class="st">"#208F84"</span>,<span class="st">"#F55840"</span>,<span class="st">"#924F3E"</span>))<span class="sc">+</span></span>
+<span id="cb70-27"><a href="#cb70-27" aria-hidden="true" tabindex="-1"></a>           <span class="fu">scale_fill_manual</span>(<span class="at">name=</span><span class="st">"trend"</span>,<span class="at">values=</span><span class="st">"red"</span>,<span class="at">labels=</span><span class="fu">expression</span>(<span class="fu">paste</span>(R<span class="sc">^</span><span class="dv">2</span>,<span class="st">"=52%"</span>)))<span class="sc">+</span></span>
+<span id="cb70-28"><a href="#cb70-28" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Corruption and human development"</span>,</span>
+<span id="cb70-29"><a href="#cb70-29" aria-hidden="true" tabindex="-1"></a>           <span class="at">caption=</span><span class="st">"Sources: Transparency International; UN Human Development Report"</span>)<span class="sc">+</span></span>
+<span id="cb70-30"><a href="#cb70-30" aria-hidden="true" tabindex="-1"></a>      <span class="fu">guides</span>(<span class="at">color=</span><span class="fu">guide_legend</span>(<span class="at">nrow=</span><span class="dv">1</span>))<span class="sc">+</span></span>
+<span id="cb70-31"><a href="#cb70-31" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme_bw</span>(<span class="at">base_family=</span><span class="st">"Gidole"</span>)<span class="sc">+</span></span>
+<span id="cb70-32"><a href="#cb70-32" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"top"</span>,</span>
+<span id="cb70-33"><a href="#cb70-33" aria-hidden="true" tabindex="-1"></a>            <span class="at">panel.grid.minor=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb70-34"><a href="#cb70-34" aria-hidden="true" tabindex="-1"></a>            <span class="at">panel.grid.major.x=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb70-35"><a href="#cb70-35" aria-hidden="true" tabindex="-1"></a>            <span class="at">panel.background=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb70-36"><a href="#cb70-36" aria-hidden="true" tabindex="-1"></a>            <span class="at">panel.border=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb70-37"><a href="#cb70-37" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend.title=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb70-38"><a href="#cb70-38" aria-hidden="true" tabindex="-1"></a>            <span class="at">axis.title=</span><span class="fu">element_text</span>(<span class="at">face=</span><span class="st">"italic"</span>),</span>
+<span id="cb70-39"><a href="#cb70-39" aria-hidden="true" tabindex="-1"></a>            <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb70-40"><a href="#cb70-40" aria-hidden="true" tabindex="-1"></a>            <span class="at">axis.ticks.x=</span><span class="fu">element_line</span>(<span class="at">color=</span><span class="st">"grey60"</span>),</span>
+<span id="cb70-41"><a href="#cb70-41" aria-hidden="true" tabindex="-1"></a>            <span class="at">plot.title=</span><span class="fu">element_text</span>(<span class="at">face=</span><span class="st">"bold"</span>),</span>
+<span id="cb70-42"><a href="#cb70-42" aria-hidden="true" tabindex="-1"></a>            <span class="at">plot.caption=</span><span class="fu">element_text</span>(<span class="at">hjust=</span><span class="dv">0</span>,<span class="at">size=</span><span class="dv">8</span>))</span>
+<span id="cb70-43"><a href="#cb70-43" aria-hidden="true" tabindex="-1"></a>p1 </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-42-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="wsj-heatmap" class="level2">
+<h2 class="anchored" data-anchor-id="wsj-heatmap">3 WSJ Heatmap</h2>
+<p>The aim of this challenge is to recreate the plot below originally published in <a href="http://graphics.wsj.com/infectious-diseases-and-vaccines/">The Wall Street Journal</a>. The plot is a heatmap showing the normalized number of cases of measles across 51 US states from 1928 to 2003. X-axis shows years and y-axis shows the names of states. The color of the tiles denote the number of measles cases per 100,000 people. Introduction of the measles vaccine is shown as the black line in 1963.</p>
+<p>Start by reading in the data. This .csv file has two lines of comments so we need to skip 2 lines while reading in the data. We also add <code>stringsAsFactors=F</code> to avoid the automatic conversion of character fields to factor type.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"/Users/tianyuzheng/Library/CloudStorage/OneDrive-KarolinskaInstitutet/Project-Tianyu/phD_Course/RaukR_2024/Material/wsj_heatmap.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="../../Library/CloudStorage/OneDrive-KarolinskaInstitutet/Project-Tianyu/phD_Course/RaukR_2024/Material/wsj_heatmap.png" class="img-fluid figure-img" width="419"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>me <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"/Users/tianyuzheng/Library/CloudStorage/OneDrive-KarolinskaInstitutet/Project-Tianyu/phD_Course/RaukR_2024/Material/data_wsj.csv"</span>,<span class="at">header=</span>T,<span class="at">stringsAsFactors=</span>F,<span class="at">skip=</span><span class="dv">2</span>)</span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(me)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  YEAR WEEK ALABAMA ALASKA ARIZONA ARKANSAS CALIFORNIA COLORADO CONNECTICUT
+1 1928    1    3.67      -    1.90     4.11       1.38     8.38        4.50
+2 1928    2    6.25      -    6.40     9.91       1.80     6.02        9.00
+3 1928    3    7.95      -    4.50    11.15       1.31     2.86        8.81
+4 1928    4   12.58      -    1.90    13.75       1.87    13.71       10.40
+5 1928    5    8.03      -    0.47    20.79       2.38     5.13       16.80
+6 1928    6    7.27      -    6.40    26.58       2.79     8.09       17.76
+  DELAWARE DISTRICT.OF.COLUMBIA FLORIDA GEORGIA HAWAII IDAHO ILLINOIS INDIANA
+1     8.58                    -    0.21    1.17      -     -     0.50    1.34
+2     7.30                    -    0.49    5.96      -  0.45     0.77    2.71
+3    15.88                    -    0.42       -      -  0.45     0.61    1.71
+4     4.29                 4.18    0.91    8.65      -     -     0.81    4.11
+5     5.58                 4.59    0.49   10.82      -  0.22     1.11    2.49
+6     3.43                 7.52    1.67    6.75      -     -     1.33    5.04
+  IOWA KANSAS KENTUCKY LOUISIANA MAINE MARYLAND MASSACHUSETTS MICHIGAN
+1 0.16   0.81     3.08      1.89  4.52    10.87         25.66     5.68
+2    -   1.35     1.99      3.00  7.40    15.47         28.50     7.59
+3    -   1.41     5.26      2.33  6.78    21.43         34.76     9.39
+4 3.51   1.14     5.49      4.02  9.41    22.67         31.28     8.66
+5 3.06   1.51     7.99     10.27  7.90    31.30         35.24     9.84
+6 2.65   1.19    11.53      9.54  5.52    34.97         37.89     4.09
+  MINNESOTA MISSISSIPPI MISSOURI MONTANA NEBRASKA NEVADA NEW.HAMPSHIRE
+1      0.31           -     1.19    0.18     1.60      -             -
+2      0.23           -     0.83    0.18     0.29      -             -
+3      0.15           -     1.69    0.74     0.36      -             -
+4      0.12           -     1.58       -     0.44      -         14.53
+5      0.31           -     2.22       -     0.22      -          3.42
+6      0.08           -     2.69    0.55     0.22      -         15.60
+  NEW.JERSEY NEW.MEXICO NEW.YORK NORTH.CAROLINA NORTH.DAKOTA OHIO OKLAHOMA
+1       3.55      14.90     7.60          47.86            - 2.51     4.86
+2       4.74      11.06     9.65         119.70         0.15    -     2.56
+3       6.68      14.90     8.54         110.90         1.20 4.86     6.27
+4       6.78      27.64     9.32         131.60         3.91 4.40     4.74
+5       9.25      37.74    10.64         119.01         0.90 6.13     4.61
+6      10.66      36.30    12.60         153.60         2.56 5.33     5.72
+  OREGON PENNSYLVANIA RHODE.ISLAND SOUTH.CAROLINA SOUTH.DAKOTA TENNESSEE TEXAS
+1   4.91         6.97         1.18          42.04         5.69     22.03  1.18
+2   4.91         8.74         0.74          83.90         6.57     16.96  0.63
+3   3.63         8.12         2.65          77.46         2.04     24.66  0.62
+4   2.24         8.39         0.15          64.75         2.19     18.86  0.37
+5   4.59        15.17         1.03          74.99         3.94     20.05  1.57
+6   4.91        11.52         0.74          82.12         2.04     12.54  3.44
+  UTAH VERMONT VIRGINIA WASHINGTON WEST.VIRGINIA WISCONSIN WYOMING
+1 0.40    0.28        -      14.83          3.36      1.54    0.91
+2    -    0.56        -      17.34          4.19      0.96       -
+3 0.20    1.12        -      15.67          4.19      4.79    1.36
+4 0.20    6.70        -      12.77          4.66      1.64    3.64
+5 0.40    6.70        -      18.83          7.37      2.91    0.91
+6 0.60    1.12        -      17.73          5.01      3.25   10.45</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(me)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   3952 obs. of  53 variables:
+ $ YEAR                : int  1928 1928 1928 1928 1928 1928 1928 1928 1928 1928 ...
+ $ WEEK                : int  1 2 3 4 5 6 7 8 9 10 ...
+ $ ALABAMA             : chr  "3.67" "6.25" "7.95" "12.58" ...
+ $ ALASKA              : chr  "-" "-" "-" "-" ...
+ $ ARIZONA             : chr  "1.90" "6.40" "4.50" "1.90" ...
+ $ ARKANSAS            : chr  "4.11" "9.91" "11.15" "13.75" ...
+ $ CALIFORNIA          : chr  "1.38" "1.80" "1.31" "1.87" ...
+ $ COLORADO            : chr  "8.38" "6.02" "2.86" "13.71" ...
+ $ CONNECTICUT         : chr  "4.50" "9.00" "8.81" "10.40" ...
+ $ DELAWARE            : chr  "8.58" "7.30" "15.88" "4.29" ...
+ $ DISTRICT.OF.COLUMBIA: chr  "-" "-" "-" "4.18" ...
+ $ FLORIDA             : chr  "0.21" "0.49" "0.42" "0.91" ...
+ $ GEORGIA             : chr  "1.17" "5.96" "-" "8.65" ...
+ $ HAWAII              : chr  "-" "-" "-" "-" ...
+ $ IDAHO               : chr  "-" "0.45" "0.45" "-" ...
+ $ ILLINOIS            : chr  "0.50" "0.77" "0.61" "0.81" ...
+ $ INDIANA             : chr  "1.34" "2.71" "1.71" "4.11" ...
+ $ IOWA                : chr  "0.16" "-" "-" "3.51" ...
+ $ KANSAS              : chr  "0.81" "1.35" "1.41" "1.14" ...
+ $ KENTUCKY            : chr  "3.08" "1.99" "5.26" "5.49" ...
+ $ LOUISIANA           : chr  "1.89" "3.00" "2.33" "4.02" ...
+ $ MAINE               : chr  "4.52" "7.40" "6.78" "9.41" ...
+ $ MARYLAND            : chr  "10.87" "15.47" "21.43" "22.67" ...
+ $ MASSACHUSETTS       : chr  "25.66" "28.50" "34.76" "31.28" ...
+ $ MICHIGAN            : chr  "5.68" "7.59" "9.39" "8.66" ...
+ $ MINNESOTA           : chr  "0.31" "0.23" "0.15" "0.12" ...
+ $ MISSISSIPPI         : chr  "-" "-" "-" "-" ...
+ $ MISSOURI            : chr  "1.19" "0.83" "1.69" "1.58" ...
+ $ MONTANA             : chr  "0.18" "0.18" "0.74" "-" ...
+ $ NEBRASKA            : chr  "1.60" "0.29" "0.36" "0.44" ...
+ $ NEVADA              : chr  "-" "-" "-" "-" ...
+ $ NEW.HAMPSHIRE       : chr  "-" "-" "-" "14.53" ...
+ $ NEW.JERSEY          : chr  "3.55" "4.74" "6.68" "6.78" ...
+ $ NEW.MEXICO          : chr  "14.90" "11.06" "14.90" "27.64" ...
+ $ NEW.YORK            : chr  "7.60" "9.65" "8.54" "9.32" ...
+ $ NORTH.CAROLINA      : chr  "47.86" "119.70" "110.90" "131.60" ...
+ $ NORTH.DAKOTA        : chr  "-" "0.15" "1.20" "3.91" ...
+ $ OHIO                : chr  "2.51" "-" "4.86" "4.40" ...
+ $ OKLAHOMA            : chr  "4.86" "2.56" "6.27" "4.74" ...
+ $ OREGON              : chr  "4.91" "4.91" "3.63" "2.24" ...
+ $ PENNSYLVANIA        : chr  "6.97" "8.74" "8.12" "8.39" ...
+ $ RHODE.ISLAND        : chr  "1.18" "0.74" "2.65" "0.15" ...
+ $ SOUTH.CAROLINA      : chr  "42.04" "83.90" "77.46" "64.75" ...
+ $ SOUTH.DAKOTA        : chr  "5.69" "6.57" "2.04" "2.19" ...
+ $ TENNESSEE           : chr  "22.03" "16.96" "24.66" "18.86" ...
+ $ TEXAS               : chr  "1.18" "0.63" "0.62" "0.37" ...
+ $ UTAH                : chr  "0.40" "-" "0.20" "0.20" ...
+ $ VERMONT             : chr  "0.28" "0.56" "1.12" "6.70" ...
+ $ VIRGINIA            : chr  "-" "-" "-" "-" ...
+ $ WASHINGTON          : chr  "14.83" "17.34" "15.67" "12.77" ...
+ $ WEST.VIRGINIA       : chr  "3.36" "4.19" "4.19" "4.66" ...
+ $ WISCONSIN           : chr  "1.54" "0.96" "4.79" "1.64" ...
+ $ WYOMING             : chr  "0.91" "-" "1.36" "3.64" ...</code></pre>
+</div>
+</div>
+<p>Looking at this dataset, there is going to be quite a bit of data clean-up and tidying before we can plot it. Here are the steps we need to take:</p>
+<ul>
+<li><p>The data needs to be transformed to long format.</p></li>
+<li><p>Replace all “-” with NAs</p></li>
+<li><p>The number of cases across each state is a character and needs to be converted to numeric</p></li>
+<li><p>Collapse (sum) week-level data to year.</p></li>
+<li><p>Abbreviate state names</p></li>
+</ul>
+<section id="tidy-data" class="level3">
+<h3 class="anchored" data-anchor-id="tidy-data"><strong>3.2 Tidy Data</strong></h3>
+<p>Convert the wide format to long format using the function <code>gather()</code> from package <code>dplyr</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>me1 <span class="ot">&lt;-</span> me <span class="sc">%&gt;%</span> <span class="fu">gather</span>(<span class="at">key=</span>state,<span class="at">value=</span>value,<span class="sc">-</span>YEAR,<span class="sc">-</span>WEEK)</span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(me1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  YEAR WEEK   state value
+1 1928    1 ALABAMA  3.67
+2 1928    2 ALABAMA  6.25
+3 1928    3 ALABAMA  7.95
+4 1928    4 ALABAMA 12.58
+5 1928    5 ALABAMA  8.03
+6 1928    6 ALABAMA  7.27</code></pre>
+</div>
+</div>
+<p>Now, replace all ‘-’ with NA in the field value. We use the function <code>str_replace()</code> from R package <code>stringr</code>. Then convert the value field to numeric.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>me2 <span class="ot">&lt;-</span> me1 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">value=</span><span class="fu">str_replace</span>(value,<span class="st">"^-$"</span>,<span class="cn">NA_character_</span>),</span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">value=</span><span class="fu">as.numeric</span>(value))</span>
+<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(me2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  YEAR WEEK   state value
+1 1928    1 ALABAMA  3.67
+2 1928    2 ALABAMA  6.25
+3 1928    3 ALABAMA  7.95
+4 1928    4 ALABAMA 12.58
+5 1928    5 ALABAMA  8.03
+6 1928    6 ALABAMA  7.27</code></pre>
+</div>
+</div>
+<p>Sum up the week-level information to year-level information. This means rather than having</p>
+<pre><code>  YEAR WEEK   state value
+1 1928    1 ALABAMA  3.67
+2 1928    2 ALABAMA  6.25
+3 1928    3 ALABAMA  7.95
+...
+5501 1957   41 ALASKA  2.16
+5502 1957   42 ALASKA  0.43
+5503 1957   43 ALASKA  1.30
+...</code></pre>
+<p>we should have one value per year per state.</p>
+<pre><code>  YEAR    state value
+1 1928  ALABAMA  3.67
+2 1929  ALABAMA  3.20
+...
+5501 1957  ALASKA  2.16
+5502 1958  ALASKA  2.05
+...</code></pre>
+<p>The solution is to sum up all the cases for a state for all weeks within a year into one value for that year. This can be done using the <code>summarise()</code> function from package <code>dplyr</code>.</p>
+<ul>
+<li><p>A custom function is used to sum over weeks. If all values are NA, then result is NA. If some values are NA, the NAs are removed and the remaining numbers are summed.</p></li>
+<li><p>The dots in state names are replaced by spaces and the words are converted to title case (First letter capital and rest lowercase).</p></li>
+<li><p>We also convert the column names to lowercase for consistency.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>fun1 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">ifelse</span>(<span class="fu">all</span>(<span class="fu">is.na</span>(x)),<span class="cn">NA</span>,<span class="fu">sum</span>(x,<span class="at">na.rm=</span><span class="cn">TRUE</span>))</span>
+<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a>me3 <span class="ot">&lt;-</span> me2 <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(YEAR,state) <span class="sc">%&gt;%</span> </span>
+<span id="cb82-4"><a href="#cb82-4" aria-hidden="true" tabindex="-1"></a>                <span class="fu">summarise</span>(<span class="at">total=</span><span class="fu">fun1</span>(value)) <span class="sc">%&gt;%</span></span>
+<span id="cb82-5"><a href="#cb82-5" aria-hidden="true" tabindex="-1"></a>                <span class="fu">mutate</span>(<span class="at">state=</span><span class="fu">str_replace_all</span>(state,<span class="st">"[.]"</span>,<span class="st">" "</span>),</span>
+<span id="cb82-6"><a href="#cb82-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">state=</span><span class="fu">str_to_title</span>(state))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'YEAR'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(me3) <span class="ot">&lt;-</span> <span class="fu">tolower</span>(<span class="fu">colnames</span>(me3))</span>
+<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(me3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+# Groups:   year [1]
+   year state      total
+  &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt;
+1  1928 Alabama    335. 
+2  1928 Alaska      NA  
+3  1928 Arizona    201. 
+4  1928 Arkansas   482. 
+5  1928 California  69.2
+6  1928 Colorado   207. </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(me3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>gropd_df [3,876 × 3] (S3: grouped_df/tbl_df/tbl/data.frame)
+ $ year : int [1:3876] 1928 1928 1928 1928 1928 1928 1928 1928 1928 1928 ...
+ $ state: chr [1:3876] "Alabama" "Alaska" "Arizona" "Arkansas" ...
+ $ total: num [1:3876] 335 NA 200.8 481.8 69.2 ...
+ - attr(*, "groups")= tibble [76 × 2] (S3: tbl_df/tbl/data.frame)
+  ..$ year : int [1:76] 1928 1929 1930 1931 1932 1933 1934 1935 1936 1937 ...
+  ..$ .rows: list&lt;int&gt; [1:76] 
+  .. ..$ : int [1:51] 1 2 3 4 5 6 7 8 9 10 ...
+  .. ..$ : int [1:51] 52 53 54 55 56 57 58 59 60 61 ...
+  .. ..$ : int [1:51] 103 104 105 106 107 108 109 110 111 112 ...
+  .. ..$ : int [1:51] 154 155 156 157 158 159 160 161 162 163 ...
+  .. ..$ : int [1:51] 205 206 207 208 209 210 211 212 213 214 ...
+  .. ..$ : int [1:51] 256 257 258 259 260 261 262 263 264 265 ...
+  .. ..$ : int [1:51] 307 308 309 310 311 312 313 314 315 316 ...
+  .. ..$ : int [1:51] 358 359 360 361 362 363 364 365 366 367 ...
+  .. ..$ : int [1:51] 409 410 411 412 413 414 415 416 417 418 ...
+  .. ..$ : int [1:51] 460 461 462 463 464 465 466 467 468 469 ...
+  .. ..$ : int [1:51] 511 512 513 514 515 516 517 518 519 520 ...
+  .. ..$ : int [1:51] 562 563 564 565 566 567 568 569 570 571 ...
+  .. ..$ : int [1:51] 613 614 615 616 617 618 619 620 621 622 ...
+  .. ..$ : int [1:51] 664 665 666 667 668 669 670 671 672 673 ...
+  .. ..$ : int [1:51] 715 716 717 718 719 720 721 722 723 724 ...
+  .. ..$ : int [1:51] 766 767 768 769 770 771 772 773 774 775 ...
+  .. ..$ : int [1:51] 817 818 819 820 821 822 823 824 825 826 ...
+  .. ..$ : int [1:51] 868 869 870 871 872 873 874 875 876 877 ...
+  .. ..$ : int [1:51] 919 920 921 922 923 924 925 926 927 928 ...
+  .. ..$ : int [1:51] 970 971 972 973 974 975 976 977 978 979 ...
+  .. ..$ : int [1:51] 1021 1022 1023 1024 1025 1026 1027 1028 1029 1030 ...
+  .. ..$ : int [1:51] 1072 1073 1074 1075 1076 1077 1078 1079 1080 1081 ...
+  .. ..$ : int [1:51] 1123 1124 1125 1126 1127 1128 1129 1130 1131 1132 ...
+  .. ..$ : int [1:51] 1174 1175 1176 1177 1178 1179 1180 1181 1182 1183 ...
+  .. ..$ : int [1:51] 1225 1226 1227 1228 1229 1230 1231 1232 1233 1234 ...
+  .. ..$ : int [1:51] 1276 1277 1278 1279 1280 1281 1282 1283 1284 1285 ...
+  .. ..$ : int [1:51] 1327 1328 1329 1330 1331 1332 1333 1334 1335 1336 ...
+  .. ..$ : int [1:51] 1378 1379 1380 1381 1382 1383 1384 1385 1386 1387 ...
+  .. ..$ : int [1:51] 1429 1430 1431 1432 1433 1434 1435 1436 1437 1438 ...
+  .. ..$ : int [1:51] 1480 1481 1482 1483 1484 1485 1486 1487 1488 1489 ...
+  .. ..$ : int [1:51] 1531 1532 1533 1534 1535 1536 1537 1538 1539 1540 ...
+  .. ..$ : int [1:51] 1582 1583 1584 1585 1586 1587 1588 1589 1590 1591 ...
+  .. ..$ : int [1:51] 1633 1634 1635 1636 1637 1638 1639 1640 1641 1642 ...
+  .. ..$ : int [1:51] 1684 1685 1686 1687 1688 1689 1690 1691 1692 1693 ...
+  .. ..$ : int [1:51] 1735 1736 1737 1738 1739 1740 1741 1742 1743 1744 ...
+  .. ..$ : int [1:51] 1786 1787 1788 1789 1790 1791 1792 1793 1794 1795 ...
+  .. ..$ : int [1:51] 1837 1838 1839 1840 1841 1842 1843 1844 1845 1846 ...
+  .. ..$ : int [1:51] 1888 1889 1890 1891 1892 1893 1894 1895 1896 1897 ...
+  .. ..$ : int [1:51] 1939 1940 1941 1942 1943 1944 1945 1946 1947 1948 ...
+  .. ..$ : int [1:51] 1990 1991 1992 1993 1994 1995 1996 1997 1998 1999 ...
+  .. ..$ : int [1:51] 2041 2042 2043 2044 2045 2046 2047 2048 2049 2050 ...
+  .. ..$ : int [1:51] 2092 2093 2094 2095 2096 2097 2098 2099 2100 2101 ...
+  .. ..$ : int [1:51] 2143 2144 2145 2146 2147 2148 2149 2150 2151 2152 ...
+  .. ..$ : int [1:51] 2194 2195 2196 2197 2198 2199 2200 2201 2202 2203 ...
+  .. ..$ : int [1:51] 2245 2246 2247 2248 2249 2250 2251 2252 2253 2254 ...
+  .. ..$ : int [1:51] 2296 2297 2298 2299 2300 2301 2302 2303 2304 2305 ...
+  .. ..$ : int [1:51] 2347 2348 2349 2350 2351 2352 2353 2354 2355 2356 ...
+  .. ..$ : int [1:51] 2398 2399 2400 2401 2402 2403 2404 2405 2406 2407 ...
+  .. ..$ : int [1:51] 2449 2450 2451 2452 2453 2454 2455 2456 2457 2458 ...
+  .. ..$ : int [1:51] 2500 2501 2502 2503 2504 2505 2506 2507 2508 2509 ...
+  .. ..$ : int [1:51] 2551 2552 2553 2554 2555 2556 2557 2558 2559 2560 ...
+  .. ..$ : int [1:51] 2602 2603 2604 2605 2606 2607 2608 2609 2610 2611 ...
+  .. ..$ : int [1:51] 2653 2654 2655 2656 2657 2658 2659 2660 2661 2662 ...
+  .. ..$ : int [1:51] 2704 2705 2706 2707 2708 2709 2710 2711 2712 2713 ...
+  .. ..$ : int [1:51] 2755 2756 2757 2758 2759 2760 2761 2762 2763 2764 ...
+  .. ..$ : int [1:51] 2806 2807 2808 2809 2810 2811 2812 2813 2814 2815 ...
+  .. ..$ : int [1:51] 2857 2858 2859 2860 2861 2862 2863 2864 2865 2866 ...
+  .. ..$ : int [1:51] 2908 2909 2910 2911 2912 2913 2914 2915 2916 2917 ...
+  .. ..$ : int [1:51] 2959 2960 2961 2962 2963 2964 2965 2966 2967 2968 ...
+  .. ..$ : int [1:51] 3010 3011 3012 3013 3014 3015 3016 3017 3018 3019 ...
+  .. ..$ : int [1:51] 3061 3062 3063 3064 3065 3066 3067 3068 3069 3070 ...
+  .. ..$ : int [1:51] 3112 3113 3114 3115 3116 3117 3118 3119 3120 3121 ...
+  .. ..$ : int [1:51] 3163 3164 3165 3166 3167 3168 3169 3170 3171 3172 ...
+  .. ..$ : int [1:51] 3214 3215 3216 3217 3218 3219 3220 3221 3222 3223 ...
+  .. ..$ : int [1:51] 3265 3266 3267 3268 3269 3270 3271 3272 3273 3274 ...
+  .. ..$ : int [1:51] 3316 3317 3318 3319 3320 3321 3322 3323 3324 3325 ...
+  .. ..$ : int [1:51] 3367 3368 3369 3370 3371 3372 3373 3374 3375 3376 ...
+  .. ..$ : int [1:51] 3418 3419 3420 3421 3422 3423 3424 3425 3426 3427 ...
+  .. ..$ : int [1:51] 3469 3470 3471 3472 3473 3474 3475 3476 3477 3478 ...
+  .. ..$ : int [1:51] 3520 3521 3522 3523 3524 3525 3526 3527 3528 3529 ...
+  .. ..$ : int [1:51] 3571 3572 3573 3574 3575 3576 3577 3578 3579 3580 ...
+  .. ..$ : int [1:51] 3622 3623 3624 3625 3626 3627 3628 3629 3630 3631 ...
+  .. ..$ : int [1:51] 3673 3674 3675 3676 3677 3678 3679 3680 3681 3682 ...
+  .. ..$ : int [1:51] 3724 3725 3726 3727 3728 3729 3730 3731 3732 3733 ...
+  .. ..$ : int [1:51] 3775 3776 3777 3778 3779 3780 3781 3782 3783 3784 ...
+  .. ..$ : int [1:51] 3826 3827 3828 3829 3830 3831 3832 3833 3834 3835 ...
+  .. ..@ ptype: int(0) 
+  ..- attr(*, ".drop")= logi TRUE</code></pre>
+</div>
+</div>
+</section>
+<section id="tile" class="level3">
+<h3 class="anchored" data-anchor-id="tile"><strong>3.3 Tile</strong></h3>
+<p>We can build up a basic ggplot and heatmap tiles can be plotted using the geom <code>geom_tile</code>. ‘year’ is mapped to the x-axis, ‘state’ to the y-axis and fill color for the tiles is the ‘total’ value.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(me3,<span class="fu">aes</span>(<span class="at">x=</span>year,<span class="at">y=</span>state,<span class="at">fill=</span>total))<span class="sc">+</span></span>
+<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_tile</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-48-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Add borders around the tiles. We use <code>reorder(state,desc(state))</code> to reverse the order of states so that it reads A-Z from top to bottom.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(me3,<span class="fu">aes</span>(<span class="at">x=</span>year,<span class="at">y=</span><span class="fu">reorder</span>(state,<span class="fu">desc</span>(state)),<span class="at">fill=</span>total))<span class="sc">+</span></span>
+<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_tile</span>(<span class="at">color=</span><span class="st">"white"</span>,<span class="at">size=</span><span class="fl">0.25</span>)</span>
+<span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a>p</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-49-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="scales" class="level3">
+<h3 class="anchored" data-anchor-id="scales"><strong>3.4 Scales</strong></h3>
+<p>The extra space on left and right (gray) of the plot is removed using argument <code>expand</code> in <code>scales</code>. X-axis breaks are redefined at 10 year intervals from 1930 to 2010. Custom colors are used for the tiles: <code>"#e7f0fa","#c9e2f6","#95cbee","#0099dc","#4ab04a", "#ffd73e","#eec73a","#e29421","#f05336","#ce472e"</code>. Since the color scale is a fill color on a continuous value and we want to supply n new colors, we use <code>scale_fill_gradientn</code>. Tiles with missing value is set to the color <code>"grey90"</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>cols <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"#e7f0fa"</span>,<span class="st">"#c9e2f6"</span>,<span class="st">"#95cbee"</span>,<span class="st">"#0099dc"</span>,<span class="st">"#4ab04a"</span>, <span class="st">"#ffd73e"</span>,<span class="st">"#eec73a"</span>,<span class="st">"#e29421"</span>,<span class="st">"#f05336"</span>,<span class="st">"#ce472e"</span>)</span>
+<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-3"><a href="#cb90-3" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">scale_y_discrete</span>(<span class="at">expand=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>))<span class="sc">+</span></span>
+<span id="cb90-4"><a href="#cb90-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">expand=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>),<span class="at">breaks=</span><span class="fu">seq</span>(<span class="dv">1930</span>,<span class="dv">2010</span>,<span class="at">by=</span><span class="dv">10</span>))<span class="sc">+</span></span>
+<span id="cb90-5"><a href="#cb90-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_gradientn</span>(<span class="at">colors=</span>cols,<span class="at">na.value=</span><span class="st">"grey95"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-50-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The fill scale can be further refined to resemble that of the original plot.<br>
+</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a>cols <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"#e7f0fa"</span>,<span class="st">"#c9e2f6"</span>,<span class="st">"#95cbee"</span>,<span class="st">"#0099dc"</span>,<span class="st">"#4ab04a"</span>, <span class="st">"#ffd73e"</span>,<span class="st">"#eec73a"</span>,<span class="st">"#e29421"</span>,<span class="st">"#f05336"</span>,<span class="st">"#ce472e"</span>)</span>
+<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> p<span class="sc">+</span> <span class="fu">scale_y_discrete</span>(<span class="at">expand=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>))<span class="sc">+</span></span>
+<span id="cb91-4"><a href="#cb91-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">scale_x_continuous</span>(<span class="at">expand=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>),<span class="at">breaks=</span><span class="fu">seq</span>(<span class="dv">1930</span>,<span class="dv">2010</span>,<span class="at">by=</span><span class="dv">10</span>))<span class="sc">+</span></span>
+<span id="cb91-5"><a href="#cb91-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">scale_fill_gradientn</span>(<span class="at">colors=</span>cols,<span class="at">na.value=</span><span class="st">"grey95"</span>,</span>
+<span id="cb91-6"><a href="#cb91-6" aria-hidden="true" tabindex="-1"></a>                             <span class="at">limits=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">4000</span>),</span>
+<span id="cb91-7"><a href="#cb91-7" aria-hidden="true" tabindex="-1"></a>                             <span class="at">values=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">0.01</span>,<span class="fl">0.02</span>,<span class="fl">0.03</span>,<span class="fl">0.09</span>,<span class="fl">0.1</span>,<span class="fl">0.15</span>,<span class="fl">0.25</span>,<span class="fl">0.4</span>,<span class="fl">0.5</span>,<span class="dv">1</span>),</span>
+<span id="cb91-8"><a href="#cb91-8" aria-hidden="true" tabindex="-1"></a>                             <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"0k"</span>,<span class="st">"1k"</span>,<span class="st">"2k"</span>,<span class="st">"3k"</span>,<span class="st">"4k"</span>),</span>
+<span id="cb91-9"><a href="#cb91-9" aria-hidden="true" tabindex="-1"></a>                             <span class="at">guide=</span><span class="fu">guide_colourbar</span>(<span class="at">ticks=</span>T,<span class="at">nbin=</span><span class="dv">50</span>,</span>
+<span id="cb91-10"><a href="#cb91-10" aria-hidden="true" tabindex="-1"></a>                                                 <span class="at">barheight=</span>.<span class="dv">5</span>,<span class="at">label=</span>T, </span>
+<span id="cb91-11"><a href="#cb91-11" aria-hidden="true" tabindex="-1"></a>                                                 <span class="at">barwidth=</span><span class="dv">10</span>))</span>
+<span id="cb91-12"><a href="#cb91-12" aria-hidden="true" tabindex="-1"></a>p</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-51-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="title-1" class="level3">
+<h3 class="anchored" data-anchor-id="title-1"><strong>3.5 Title</strong></h3>
+<p>We can remove the x and y axes titles and add a plot title</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> p<span class="sc">+</span><span class="fu">labs</span>(<span class="at">x=</span><span class="st">""</span>,<span class="at">y=</span><span class="st">""</span>,<span class="at">fill=</span><span class="st">""</span>,<span class="at">title=</span><span class="st">"Measles"</span>)</span>
+<span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a>p</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-52-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="fixed-coords" class="level3">
+<h3 class="anchored" data-anchor-id="fixed-coords"><strong>3.6 Fixed Coords</strong></h3>
+<p>We can use <code>coord_fixed()</code> to fix the coordinates for equal values in x and y direction. This should render perfectly square tiles.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> p<span class="sc">+</span><span class="fu">coord_fixed</span>()</span>
+<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a>p</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-53-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="annotation" class="level3">
+<h3 class="anchored" data-anchor-id="annotation"><strong>3.7 Annotation</strong></h3>
+<p>Add the annotation line and text to denote the introduction of the vaccine. The line is at the position 1963. Custom font ‘Gidole’ is used here. This can be skipped.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> p<span class="sc">+</span><span class="fu">geom_segment</span>(<span class="at">x=</span><span class="dv">1963</span>,<span class="at">xend=</span><span class="dv">1963</span>,<span class="at">y=</span><span class="dv">0</span>,<span class="at">yend=</span><span class="fl">51.5</span>,<span class="at">size=</span>.<span class="dv">6</span>,<span class="at">alpha=</span><span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a>        <span class="fu">annotate</span>(<span class="st">"text"</span>,<span class="at">label=</span><span class="st">"Vaccine introduced"</span>,<span class="at">x=</span><span class="dv">1963</span>,<span class="at">y=</span><span class="dv">53</span>, </span>
+<span id="cb94-3"><a href="#cb94-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">vjust=</span><span class="dv">1</span>,<span class="at">hjust=</span><span class="dv">0</span>,<span class="at">size=</span><span class="fu">I</span>(<span class="dv">3</span>),<span class="at">family=</span><span class="st">"Gidole"</span>)</span>
+<span id="cb94-4"><a href="#cb94-4" aria-hidden="true" tabindex="-1"></a>p</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-54-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="theme-1" class="level3">
+<h3 class="anchored" data-anchor-id="theme-1"><strong>3.8 Theme</strong></h3>
+<p>Here we change the following aspects of the plot using <code>theme</code>:</p>
+<ul>
+<li><p>Change theme to <code>theme_minimal</code> to remove unnecessary plot elements.</p></li>
+<li><p>Optional custom font. See ‘Custom font’ section under ‘Economist Scatterplot’.</p></li>
+<li><p>Position the legend to bottom center.</p></li>
+<li><p>Set legend font to color grey20.</p></li>
+<li><p>Adjust size and justification of x and y axes text</p></li>
+<li><p>Adjust title justification</p></li>
+<li><p>Remove all gridlines</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a>p<span class="sc">+</span><span class="fu">theme_minimal</span>(<span class="at">base_family=</span><span class="st">"Gidole"</span>)<span class="sc">+</span></span>
+<span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"bottom"</span>,</span>
+<span id="cb95-3"><a href="#cb95-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.justification=</span><span class="st">"center"</span>,</span>
+<span id="cb95-4"><a href="#cb95-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.direction=</span><span class="st">"horizontal"</span>,</span>
+<span id="cb95-5"><a href="#cb95-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.text=</span><span class="fu">element_text</span>(<span class="at">color=</span><span class="st">"grey20"</span>),</span>
+<span id="cb95-6"><a href="#cb95-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.y=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">6</span>,<span class="at">hjust=</span><span class="dv">1</span>,<span class="at">vjust=</span><span class="fl">0.5</span>),</span>
+<span id="cb95-7"><a href="#cb95-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">8</span>),</span>
+<span id="cb95-8"><a href="#cb95-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb95-9"><a href="#cb95-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">title=</span><span class="fu">element_text</span>(<span class="at">hjust=</span><span class="sc">-</span>.<span class="dv">07</span>,<span class="at">vjust=</span><span class="dv">1</span>),</span>
+<span id="cb95-10"><a href="#cb95-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid=</span><span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-55-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The full code for this challenge is here:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="co"># custom summing function</span></span>
+<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a>fun1 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">ifelse</span>(<span class="fu">all</span>(<span class="fu">is.na</span>(x)),<span class="cn">NA</span>,<span class="fu">sum</span>(x,<span class="at">na.rm=</span><span class="cn">TRUE</span>))</span>
+<span id="cb96-3"><a href="#cb96-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-4"><a href="#cb96-4" aria-hidden="true" tabindex="-1"></a><span class="co"># read data</span></span>
+<span id="cb96-5"><a href="#cb96-5" aria-hidden="true" tabindex="-1"></a>me3 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"/Users/tianyuzheng/Library/CloudStorage/OneDrive-KarolinskaInstitutet/Project-Tianyu/phD_Course/RaukR_2024/Material/data_wsj.csv"</span>,<span class="at">header=</span>T,</span>
+<span id="cb96-6"><a href="#cb96-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">stringsAsFactors=</span>F,<span class="at">skip=</span><span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb96-7"><a href="#cb96-7" aria-hidden="true" tabindex="-1"></a>        <span class="fu">gather</span>(<span class="at">key=</span>state,<span class="at">value=</span>value,<span class="sc">-</span>YEAR,<span class="sc">-</span>WEEK) <span class="sc">%&gt;%</span></span>
+<span id="cb96-8"><a href="#cb96-8" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">value=</span><span class="fu">str_replace</span>(value,<span class="st">"^-$"</span>,<span class="cn">NA_character_</span>),</span>
+<span id="cb96-9"><a href="#cb96-9" aria-hidden="true" tabindex="-1"></a>                            <span class="at">value=</span><span class="fu">as.numeric</span>(value)) <span class="sc">%&gt;%</span></span>
+<span id="cb96-10"><a href="#cb96-10" aria-hidden="true" tabindex="-1"></a>        <span class="fu">group_by</span>(YEAR,state) <span class="sc">%&gt;%</span> </span>
+<span id="cb96-11"><a href="#cb96-11" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">summarise</span>(<span class="at">total=</span><span class="fu">fun1</span>(value)) <span class="sc">%&gt;%</span></span>
+<span id="cb96-12"><a href="#cb96-12" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">mutate</span>(<span class="at">state=</span><span class="fu">str_replace_all</span>(state,<span class="st">"[.]"</span>,<span class="st">" "</span>),</span>
+<span id="cb96-13"><a href="#cb96-13" aria-hidden="true" tabindex="-1"></a>                             <span class="at">state=</span><span class="fu">str_to_title</span>(state))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'YEAR'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(me3) <span class="ot">&lt;-</span> <span class="fu">tolower</span>(<span class="fu">colnames</span>(me3))</span>
+<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-3"><a href="#cb98-3" aria-hidden="true" tabindex="-1"></a><span class="co"># custom colors</span></span>
+<span id="cb98-4"><a href="#cb98-4" aria-hidden="true" tabindex="-1"></a>cols <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"#e7f0fa"</span>,<span class="st">"#c9e2f6"</span>,<span class="st">"#95cbee"</span>,<span class="st">"#0099dc"</span>,<span class="st">"#4ab04a"</span>, <span class="st">"#ffd73e"</span>,<span class="st">"#eec73a"</span>,<span class="st">"#e29421"</span>,<span class="st">"#f05336"</span>,<span class="st">"#ce472e"</span>)</span>
+<span id="cb98-5"><a href="#cb98-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-6"><a href="#cb98-6" aria-hidden="true" tabindex="-1"></a><span class="co"># plotting</span></span>
+<span id="cb98-7"><a href="#cb98-7" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(me3,<span class="fu">aes</span>(<span class="at">x=</span>year,<span class="at">y=</span><span class="fu">reorder</span>(state,<span class="fu">desc</span>(state)),<span class="at">fill=</span>total))<span class="sc">+</span></span>
+<span id="cb98-8"><a href="#cb98-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_tile</span>(<span class="at">color=</span><span class="st">"white"</span>,<span class="at">size=</span><span class="fl">0.25</span>)<span class="sc">+</span></span>
+<span id="cb98-9"><a href="#cb98-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_y_discrete</span>(<span class="at">expand=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>))<span class="sc">+</span></span>
+<span id="cb98-10"><a href="#cb98-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_x_continuous</span>(<span class="at">expand=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>),<span class="at">breaks=</span><span class="fu">seq</span>(<span class="dv">1930</span>,<span class="dv">2010</span>,<span class="at">by=</span><span class="dv">10</span>))<span class="sc">+</span></span>
+<span id="cb98-11"><a href="#cb98-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_fill_gradientn</span>(<span class="at">colors=</span>cols,<span class="at">na.value=</span><span class="st">"grey95"</span>,</span>
+<span id="cb98-12"><a href="#cb98-12" aria-hidden="true" tabindex="-1"></a>                           <span class="at">limits=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">4000</span>),</span>
+<span id="cb98-13"><a href="#cb98-13" aria-hidden="true" tabindex="-1"></a>                           <span class="at">values=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">0.01</span>,<span class="fl">0.02</span>,<span class="fl">0.03</span>,<span class="fl">0.09</span>,<span class="fl">0.1</span>,<span class="fl">0.15</span>,<span class="fl">0.25</span>,<span class="fl">0.4</span>,<span class="fl">0.5</span>,<span class="dv">1</span>),</span>
+<span id="cb98-14"><a href="#cb98-14" aria-hidden="true" tabindex="-1"></a>                           <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"0k"</span>,<span class="st">"1k"</span>,<span class="st">"2k"</span>,<span class="st">"3k"</span>,<span class="st">"4k"</span>),</span>
+<span id="cb98-15"><a href="#cb98-15" aria-hidden="true" tabindex="-1"></a>                           <span class="at">guide=</span><span class="fu">guide_colourbar</span>(<span class="at">ticks=</span>T,<span class="at">nbin=</span><span class="dv">50</span>,</span>
+<span id="cb98-16"><a href="#cb98-16" aria-hidden="true" tabindex="-1"></a>                                               <span class="at">barheight=</span>.<span class="dv">5</span>,<span class="at">label=</span>T, </span>
+<span id="cb98-17"><a href="#cb98-17" aria-hidden="true" tabindex="-1"></a>                                               <span class="at">barwidth=</span><span class="dv">10</span>))<span class="sc">+</span></span>
+<span id="cb98-18"><a href="#cb98-18" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">x=</span><span class="st">""</span>,<span class="at">y=</span><span class="st">""</span>,<span class="at">fill=</span><span class="st">""</span>,<span class="at">title=</span><span class="st">"Measles"</span>)<span class="sc">+</span></span>
+<span id="cb98-19"><a href="#cb98-19" aria-hidden="true" tabindex="-1"></a>      <span class="fu">coord_fixed</span>()<span class="sc">+</span></span>
+<span id="cb98-20"><a href="#cb98-20" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_segment</span>(<span class="at">x=</span><span class="dv">1963</span>,<span class="at">xend=</span><span class="dv">1963</span>,<span class="at">y=</span><span class="dv">0</span>,<span class="at">yend=</span><span class="fl">51.5</span>,<span class="at">size=</span>.<span class="dv">9</span>) <span class="sc">+</span></span>
+<span id="cb98-21"><a href="#cb98-21" aria-hidden="true" tabindex="-1"></a>      <span class="fu">annotate</span>(<span class="st">"text"</span>,<span class="at">label=</span><span class="st">"Vaccine introduced"</span>,<span class="at">x=</span><span class="dv">1963</span>,<span class="at">y=</span><span class="dv">53</span>, </span>
+<span id="cb98-22"><a href="#cb98-22" aria-hidden="true" tabindex="-1"></a>               <span class="at">vjust=</span><span class="dv">1</span>,<span class="at">hjust=</span><span class="dv">0</span>,<span class="at">size=</span><span class="fu">I</span>(<span class="dv">3</span>),<span class="at">family=</span><span class="st">"Gidole"</span>)<span class="sc">+</span></span>
+<span id="cb98-23"><a href="#cb98-23" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme_minimal</span>(<span class="at">base_family=</span><span class="st">"Gidole"</span>)<span class="sc">+</span></span>
+<span id="cb98-24"><a href="#cb98-24" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"bottom"</span>,</span>
+<span id="cb98-25"><a href="#cb98-25" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.justification=</span><span class="st">"center"</span>,</span>
+<span id="cb98-26"><a href="#cb98-26" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.direction=</span><span class="st">"horizontal"</span>,</span>
+<span id="cb98-27"><a href="#cb98-27" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.text=</span><span class="fu">element_text</span>(<span class="at">color=</span><span class="st">"grey20"</span>),</span>
+<span id="cb98-28"><a href="#cb98-28" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.y=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">6</span>,<span class="at">hjust=</span><span class="dv">1</span>,<span class="at">vjust=</span><span class="fl">0.5</span>),</span>
+<span id="cb98-29"><a href="#cb98-29" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">8</span>),</span>
+<span id="cb98-30"><a href="#cb98-30" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb98-31"><a href="#cb98-31" aria-hidden="true" tabindex="-1"></a>        <span class="at">title=</span><span class="fu">element_text</span>(<span class="at">hjust=</span><span class="sc">-</span>.<span class="dv">07</span>,<span class="at">vjust=</span><span class="dv">1</span>),</span>
+<span id="cb98-32"><a href="#cb98-32" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid=</span><span class="fu">element_blank</span>())</span>
+<span id="cb98-33"><a href="#cb98-33" aria-hidden="true" tabindex="-1"></a>p</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Day2_lab6_ggplot_files/figure-html/unnamed-chunk-56-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="quarto" class="level2">
+<h2 class="anchored" data-anchor-id="quarto">Quarto</h2>
+<p>Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <a href="https://quarto.org" class="uri">https://quarto.org</a>.</p>
+</section>
+<section id="section" class="level2">
+<h2 class="anchored" data-anchor-id="section"></h2>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
