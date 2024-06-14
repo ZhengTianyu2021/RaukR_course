@@ -16,7 +16,7 @@ library(ggrepel)
 library(patchwork)
 ```
 
-### 1.1 Building a plot 
+### 1.1 Building a plot
 
 We use the `iris` data to get started. This dataset has four continuous variables and one categorical variable. It is important to remember about the data type when plotting graphs
 
@@ -429,7 +429,7 @@ p <- p+scale_x_continuous(name="Corruption Perceptions Index, 2011 (10=least cor
 p
 ```
 
-### **2.8 Scale Colors** 
+### **2.8 Scale Colors**
 
 -   Use `scale_color_manual()` to provide custom colors. These are the colors to use for the points: `"#23576E","#099FDB","#29B00E", "#208F84","#F55840","#924F3E"`.
 
